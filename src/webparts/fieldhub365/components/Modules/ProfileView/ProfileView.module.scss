@@ -1,0 +1,220 @@
+.profileContainer {
+  padding-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* HEADER */
+
+.profileHeader {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 0 0 60px 60px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.settingsBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  button {
+    padding: 10px;
+    background: #f3f4f6;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    color: #bbb;
+    display: none;
+  }
+}
+
+.avatarWrapper {
+  position: relative;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.avatar {
+  width: 112px;
+  height: 112px;
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.08);
+  border: 8px solid #eef2ff;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.statusIndicator {
+  position: absolute;
+  bottom: -2px;
+  right: 35%;
+  width: 20px;
+  height: 20px;
+  background: #10b981;
+  border-radius: 50%;
+  border: 4px solid white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.roleBadge {
+  margin: 10px auto 20px;
+  padding: 6px 12px;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: rgba(91, 95, 199, 0.1);
+  color: #5b5fc7;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.miniBadges {
+  display: flex;
+  gap: 12px;
+}
+
+.miniBadge {
+  flex: 1;
+  padding: 12px;
+  border-radius: 20px;
+  border: 1px solid #eee;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.miniValue {
+  font-weight: 900;
+  font-size: 14px;
+  margin: 0;
+  color: #000;
+}
+
+.miniLabel {
+  font-size: 9px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin: 0;
+  font-weight: 900;
+}
+
+.amber {
+  color: #f59e0b;
+}
+.indigo {
+  color: #5b5fc7;
+}
+.purple {
+  color: #8b5cf6;
+}
+
+/* SECTION */
+
+.section {
+  padding: 0 24px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* IMPACT GRID */
+
+.impactGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.impactTile {
+  background: white;
+  padding: 20px;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.impactIcon {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  opacity: 0.07;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.skillPill {
+  padding: 7px 15px;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #666;
+  transition: 0.2s ease;
+
+  &:hover {
+    border-color: #5b5fc7;
+    color: #5b5fc7;
+  }
+}
+
+/* INFO */
+
+.infoCard {
+  background: white;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  gap: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  &:hover {
+    background: #f8f9fb;
+  }
+}
+
+.infoLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #cbd5e1;
+  font-weight: 800;
+  margin: 0;
+}
+
+.infoValue {
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}

@@ -1,0 +1,72 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.16",
+    "id": "a1e4eeff-7d7f-49ea-88d0-611be2821cb1",
+    "version": "1.0.2",
+    "developer": {
+        "name": "Field Hub 365",
+        "websiteUrl": "https://admin.teams.microsoft.com/policies/manage-apps/d6862e0e-0986-4fe7-a8d4-3d05bb59de87",
+        "privacyUrl": "https://admin.teams.microsoft.com/policies/manage-apps/d6862e0e-0986-4fe7-a8d4-3d05bb59de87",
+        "termsOfUseUrl": "https://admin.teams.microsoft.com/policies/manage-apps/d6862e0e-0986-4fe7-a8d4-3d05bb59de87",
+        "mpnId": "12345"
+    },
+    "name": {
+        "full": "Field Hub 365",
+        "short": "Field Hub 365"
+    },
+    "description": {
+        "short": "Field Hub 365",
+        "full": "Field Hub 365"
+    },
+    "icons": {
+        "outline": "a1e4eeff-7d7f-49ea-88d0-611be2821cb1_outline.png",
+        "color": "a1e4eeff-7d7f-49ea-88d0-611be2821cb1_color.png"
+    },
+    "accentColor": "#ffffff",
+    "configurableTabs": [
+        {
+            "configurationUrl": "https://{teamSiteDomain}{teamSitePath}/_layouts/15/TeamsLogon.aspx?SPFX=true&dest={teamSitePath}/_layouts/15/teamshostedapp.aspx%3FopenPropertyPane=true%26teams%26componentId=a1e4eeff-7d7f-49ea-88d0-611be2821cb1%26forceLocale={locale}",
+            "canUpdateConfiguration": false,
+            "scopes": [
+                "team"
+            ],
+            "context": [
+                "channelTab",
+                "privateChatTab",
+                "meetingSidePanel",
+                "meetingDetailsTab",
+                "meetingChatTab"
+            ]
+        }
+    ],
+    "staticTabs": [
+        {
+            "entityId": "a1e4eeff-7d7f-49ea-88d0-611be2821cb1",
+            "name": "Field Hub 365",
+            "contentUrl": "https://{teamSiteDomain}/_layouts/15/TeamsLogon.aspx?SPFX=true&dest=/_layouts/15/teamshostedapp.aspx%3Fteams%26personal%26componentId=a1e4eeff-7d7f-49ea-88d0-611be2821cb1%26forceLocale={locale}",
+            "websiteUrl": "https://admin.teams.microsoft.com/policies/manage-apps/d6862e0e-0986-4fe7-a8d4-3d05bb59de87",
+            "scopes": [
+                "personal",
+                "team"
+            ]
+        }
+    ],
+    "validDomains": [
+        "*.login.microsoftonline.com",
+        "*.sharepoint.com",
+        "resourceseng.blob.core.windows.net",
+        "{teamsitedomain}",
+        "cdn.XXXXX.com",
+        "spoppe-a.akamaihd.net",
+        "spoprod-a.akamaihd.net",
+        "msft.spoppe.com"
+    ],
+    "devicePermissions": [
+        "media",
+        "geolocation"
+    ],
+    "webApplicationInfo": {
+        "resource": "https://{teamSiteDomain}",
+        "id": "00000003-0000-0ff1-ce00-000000000000"
+    }
+}

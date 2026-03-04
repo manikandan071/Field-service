@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "fieldhub-365-client-side-solution",
+    "id": "035a591d-a066-41fb-8dfe-bea936ba3a65",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.18.2"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "fieldhub365 description"
+      },
+      "longDescription": {
+        "default": "fieldhub365 description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "fieldhub-365 Feature",
+        "description": "The feature that activates elements of the fieldhub-365 solution.",
+        "id": "c9c0032f-733c-47e2-981c-f1766a1b64d1",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/fieldhub-365.sppkg"
+  }
+}
