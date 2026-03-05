@@ -171,6 +171,7 @@
   font-size: 20px;
   font-weight: 900;
   color: #881337;
+  margin: 0px;
 }
 
 .ratingValueRow {
@@ -184,6 +185,7 @@
   font-weight: 900;
   color: #78350f;
   letter-spacing: -0.02em;
+  margin: 0px;
 }
 
 .ratingMax {
@@ -278,6 +280,15 @@
   color: #90a7c2;
   text-transform: uppercase;
   margin: 0;
+}
+
+.activityTime {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
 }
 
 .logDescription {

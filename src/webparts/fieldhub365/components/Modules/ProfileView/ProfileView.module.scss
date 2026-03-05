@@ -5,6 +5,19 @@
   gap: 24px;
 }
 
+.profileBanner {
+  background: #fff;
+  padding: 40px 0px;
+  border-radius: 0px 0px 55px 55px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.profileBanner h2 {
+  margin: 0px;
+  text-align: center;
+}
+
 /* HEADER */
 
 .profileHeader {
@@ -82,6 +95,7 @@
 .miniBadges {
   display: flex;
   gap: 12px;
+  padding: 0px 24px;
 }
 
 .miniBadge {
@@ -159,6 +173,36 @@
   opacity: 0.07;
 }
 
+.impactLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #cbd5e1;
+  font-weight: 800;
+  margin: 0px;
+}
+
+.impactBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 0px;
+}
+
+.impactBottom h4 {
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0px;
+}
+
+.trend {
+  font-size: 10px;
+  background: #e6f9f0;
+  color: #10b981;
+  padding: 4px 6px;
+  border-radius: 8px;
+  font-weight: 800;
+}
+
 .skills {
   display: flex;
   flex-wrap: wrap;
@@ -203,6 +247,15 @@
   &:hover {
     background: #f8f9fb;
   }
+}
+
+.infoRow .infoIcon {
+  display: flex;
+}
+.infoRow .infoContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .infoLabel {

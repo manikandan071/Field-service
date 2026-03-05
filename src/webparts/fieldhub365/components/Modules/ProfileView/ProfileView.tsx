@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
@@ -16,26 +20,27 @@ import {
 } from "lucide-react";
 
 import styles from "./ProfileView.module.scss";
-import { Web } from "@pnp/sp/presets/all";
+// import { Web } from "@pnp/sp/presets/all";
 
 interface ProfileViewProps {
-  employeeDetails: any;
+  employeeInformations: any;
 }
 
-const ProfileView: React.FC<ProfileViewProps> = ({ employeeDetails }) => {
-  const spWeb = Web("https://chandrudemo.sharepoint.com/sites/FieldService");
-  const [profileImage, setProfileImage] = useState<string>("");
+const ProfileView: React.FC<ProfileViewProps> = ({ employeeInformations }) => {
+  //   const spWeb = Web("https://chandrudemo.sharepoint.com/sites/FieldService");
+  const [employeeDetails, setEmployeeDetails] = useState<any>();
 
   useEffect(() => {
-    (async () => {
-      const user = await spWeb.currentUser.get();
-      setProfileImage(user.Email);
-    })();
-  }, [employeeDetails]);
+    console.log("employeeInformations", employeeInformations);
+
+    if (employeeInformations) {
+      setEmployeeDetails(employeeInformations);
+    }
+  }, [employeeInformations]);
 
   return (
     <div className={styles.profileContainer}>
-      <div>
+      <div className={styles.profileBanner}>
         <div className={styles.settingsBtn}>
           <button>
             <Settings size={22} />
@@ -44,7 +49,13 @@ const ProfileView: React.FC<ProfileViewProps> = ({ employeeDetails }) => {
 
         <div className={styles.avatarWrapper}>
           <div className={styles.avatar}>
-            <img src={profileImage} alt="Avatar" />
+            <img
+              src={
+                "/_layouts/15/userphoto.aspx?size=L&username=" +
+                employeeDetails?.contactEmail
+              }
+              alt="Avatar"
+            />
           </div>
           <div className={styles.statusIndicator} />
         </div>
@@ -57,19 +68,19 @@ const ProfileView: React.FC<ProfileViewProps> = ({ employeeDetails }) => {
             icon={<Star size={14} fill="currentColor" />}
             label="Avg Star"
             value="4.9"
-            color="amber"
+            color={styles.amber}
           />
           <MiniBadge
             icon={<Zap size={14} fill="currentColor" />}
             label="Activity"
             value="High"
-            color="indigo"
+            color={styles.indigo}
           />
           <MiniBadge
             icon={<Award size={14} />}
             label="Level"
             value="Gold"
-            color="purple"
+            color={styles.purple}
           />
         </div>
       </div>
@@ -153,10 +164,10 @@ const MiniBadge: React.FC<{
   value: string;
   color: string;
 }> = ({ icon, label, value, color }) => (
-  <div className={`mini-badge ${color}`}>
-    <div className="mini-icon">{icon}</div>
-    <p className="mini-value">{value}</p>
-    <p className="mini-label">{label}</p>
+  <div className={`${styles.miniBadge} ${color}`}>
+    <div>{icon}</div>
+    <p className={styles.miniValue}>{value}</p>
+    <p className={styles.miniLabel}>{label}</p>
   </div>
 );
 
@@ -166,12 +177,12 @@ const ImpactTile: React.FC<{
   trend: string;
   icon: React.ReactNode;
 }> = ({ label, value, trend, icon }) => (
-  <div className="impact-tile">
-    <div className="impact-icon">{icon}</div>
-    <p className="impact-label">{label}</p>
-    <div className="impact-bottom">
+  <div className={styles.impactTile}>
+    <div className={styles.impactIcon}>{icon}</div>
+    <p className={styles.impactLabel}>{label}</p>
+    <div className={styles.impactBottom}>
       <h4>{value}</h4>
-      {trend && <span className="trend">{trend}</span>}
+      {trend && <span className={styles.trend}>{trend}</span>}
     </div>
   </div>
 );
@@ -181,11 +192,11 @@ const InfoRow: React.FC<{
   label: string;
   value: string;
 }> = ({ icon, label, value }) => (
-  <div className="info-row">
-    <div className="info-icon">{icon}</div>
-    <div className="info-content">
-      <p className="info-label">{label}</p>
-      <p className="info-value">{value}</p>
+  <div className={styles.infoRow}>
+    <div className={styles.infoIcon}>{icon}</div>
+    <div className={styles.infoContent}>
+      <p className={styles.infoLabel}>{label}</p>
+      <p className={styles.infoValue}>{value}</p>
     </div>
     {/* <ChevronRight size={16} /> */}
   </div>

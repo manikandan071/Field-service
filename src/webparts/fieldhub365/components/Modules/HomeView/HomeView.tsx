@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import {
   CheckCircle2,
   ArrowRight,
@@ -46,6 +49,8 @@ const HomeView: React.FC<HomeViewProps> = ({
   );
   const [elapsed, setElapsed] = useState("00:00:00");
 
+  console.log("clockInOut", clockInOut, clockInTime, isClockedIn);
+
   useEffect(() => {
     let interval: number;
 
@@ -71,13 +76,13 @@ const HomeView: React.FC<HomeViewProps> = ({
   useEffect(() => {
     const initClockStatus = async () => {
       const user = await spWeb.currentUser.get();
-      const activeRecord = await getActiveClockRecord(user.Email, spWeb);
+      const activeRecord = await getActiveClockRecord(user.Id, spWeb);
 
-      setClockInOut(activeRecord);
+      setClockInOut(activeRecord[0]);
 
       if (activeRecord) {
         setIsClockedIn(true);
-        setClockInTime(new Date(activeRecord.fields.StartTime));
+        setClockInTime(new Date(activeRecord[0].StartTime));
       } else {
         setIsClockedIn(false);
       }
@@ -87,8 +92,8 @@ const HomeView: React.FC<HomeViewProps> = ({
   }, []);
 
   const handleToggleClock = async () => {
-    if (clockInOut && clockInOut?.id) {
-      await clockOut(spWeb, clockInOut.id);
+    if (clockInOut && clockInOut?.Id) {
+      await clockOut(spWeb, clockInOut.Id);
       setIsClockedIn(false);
       setClockInOut({});
       setClockInTime(null);
@@ -101,20 +106,12 @@ const HomeView: React.FC<HomeViewProps> = ({
 
   return (
     <div className={styles.homeContainer}>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className={styles.premiumBanner}
-      >
+      <div className={styles.premiumBanner}>
         <div className={styles.bannerContent}>
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            className={styles.badge}
-          >
+          <div className={styles.badge}>
             <Zap size={10} color="#fde047" fill="currentColor" />
             Duty Active
-          </motion.div>
+          </div>
 
           <h2 className={styles.bannerTitle}>
             Good shift v2,
@@ -126,29 +123,23 @@ const HomeView: React.FC<HomeViewProps> = ({
             You have 5 high-priority tickets today.
           </p>
 
-          <motion.button
-            whileHover={{ x: 5 }}
-            whileTap={{ scale: 0.95 }}
-            className={styles.primaryButton}
-            onClick={onViewTodayJobs}
-          >
+          <button className={styles.primaryButton} onClick={onViewTodayJobs}>
             Go to Jobs
             <ArrowRight size={16} />
-          </motion.button>
+          </button>
         </div>
 
-        <motion.div
-          animate={{ y: [0, -50, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        <div
+          //   animate={{ y: [0, -50, 0] }}
+          //   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           className={styles.bannerImage}
         >
           <img src="https://img.icons8.com/clouds/200/wrench.png" alt="Asset" />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       <div className={styles.cardsGrid}>
-        <motion.div
-          whileTap={{ scale: 0.96 }}
+        <div
           onClick={handleToggleClock}
           className={`${styles.clockCard} ${
             isClockedIn ? styles.on : styles.off
@@ -174,9 +165,9 @@ const HomeView: React.FC<HomeViewProps> = ({
               <p className={styles.hint}>Tap to Clock In</p>
             </>
           )}
-        </motion.div>
+        </div>
 
-        <motion.div whileTap={{ scale: 0.96 }} className={styles.ratingCard}>
+        <div className={styles.ratingCard}>
           <div className={styles.cardBgIcon}>
             <Trophy size={80} />
           </div>
@@ -189,7 +180,7 @@ const HomeView: React.FC<HomeViewProps> = ({
             <span className={styles.ratingMax}>/5.0</span>
           </div>
           <p className={styles.hint}>Top 1% Technician</p>
-        </motion.div>
+        </div>
       </div>
 
       <div className={styles.logsSection}>
@@ -204,11 +195,8 @@ const HomeView: React.FC<HomeViewProps> = ({
           {recentActivities
             .slice(0, 3)
             .map((activity: IActivities, index: number) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
                 className={styles.logCard}
                 onClick={() => openJobDetails(activity.job)}
               >
@@ -225,7 +213,7 @@ const HomeView: React.FC<HomeViewProps> = ({
                 <div className={styles.logContent}>
                   <div className={styles.logHeader}>
                     <p className={styles.logType}>{activity.title}</p>
-                    <div>
+                    <div className={styles.activityTime}>
                       <Calendar size={10} />
                       {getTimeAgo(activity.created)}
                     </div>
@@ -234,7 +222,7 @@ const HomeView: React.FC<HomeViewProps> = ({
                     {activity.description}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             ))}
         </div>
       </div>

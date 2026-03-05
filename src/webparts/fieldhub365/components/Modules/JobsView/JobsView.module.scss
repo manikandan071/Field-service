@@ -1,3 +1,9 @@
+.todayjob_container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+}
 .jobsHeader h2 {
   font-size: 22px;
   font-weight: 800;
@@ -186,7 +192,7 @@
 
 .jobMeta {
   display: flex;
-  gap: 16px;
+  gap: 8px;
   font-size: 11px;
   opacity: 0.6;
 }

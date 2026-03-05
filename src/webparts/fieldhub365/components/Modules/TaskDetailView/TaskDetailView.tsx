@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from "react";
 import { useState, useRef, useEffect, SetStateAction, Dispatch } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Info,
   //   MessageSquare,
@@ -126,14 +129,14 @@ const TaskDetailView: React.FC<JobsDetailsProps> = ({ allJobs }) => {
 
       {/* Tab Content */}
       <div className="job-tab-content">
-        <AnimatePresence>
+        <div>
           {activeTab === "details" && (
             <DetailsTab key="details" job={selectedJob} />
           )}
           {activeTab === "ai" && <AIChatTab key="ai" job={selectedJob} />}
           {activeTab === "attachments" && <AttachmentsTab key="attachments" />}
           {activeTab === "signature" && <SignatureTab key="signature" />}
-        </AnimatePresence>
+        </div>
       </div>
     </div>
   );
@@ -163,11 +166,7 @@ interface DetailsTabProps {
 }
 
 const DetailsTab: React.FC<DetailsTabProps> = ({ job }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="details-tab"
-  >
+  <div className="details-tab">
     <div className="details-card">
       <h3 className="card-title">Client Contact</h3>
       <DetailItem
@@ -208,7 +207,7 @@ const DetailsTab: React.FC<DetailsTabProps> = ({ job }) => (
         </p>
       </div>
     </div>
-  </motion.div>
+  </div>
 );
 
 interface DetailItemProps {
@@ -295,11 +294,7 @@ const AIChatTab: React.FC<AIChatTabProps> = ({ job }) => {
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="ai-chat-container"
-    >
+    <div className="ai-chat-container">
       <div className="chat-header">
         <Sparkles size={16} className="chat-header-icon" />
         <span className="chat-header-title">Co-Pilot Technical Support</span>
@@ -348,7 +343,7 @@ const AIChatTab: React.FC<AIChatTabProps> = ({ job }) => {
           </button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -406,11 +401,7 @@ const AttachmentsTab: React.FC = () => {
   );
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="attachments-tab"
-    >
+    <div className="attachments-tab">
       <PhotoSection
         title="Before Work"
         photos={beforePhotos}
@@ -428,7 +419,7 @@ const AttachmentsTab: React.FC = () => {
           <Upload size={14} /> Submit Media
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -494,11 +485,7 @@ const SignatureTab: React.FC = () => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="signature-tab"
-    >
+    <div className="signature-tab">
       <div className="signature-card">
         <h3 className="signature-title">Customer Confirmation</h3>
         <div className="canvas-container">
@@ -536,7 +523,7 @@ const SignatureTab: React.FC = () => {
         </button>
         <button className="confirm-btn">Complete Job</button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

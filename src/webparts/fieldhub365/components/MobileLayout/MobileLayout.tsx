@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
@@ -8,7 +12,6 @@ import {
   Bell,
   ArrowLeft,
 } from "lucide-react";
-import { motion } from "framer-motion";
 import {
   Routes,
   Route,
@@ -21,6 +24,7 @@ import styles from "./MobileLayout.module.scss";
 
 import { Web } from "@pnp/sp/webs";
 import {
+  getAllActivities,
   getEmployeeDetails,
   getjobsDetails,
 } from "../../services/commonService";
@@ -32,7 +36,6 @@ import AllJobsListView from "../Modules/AllJobsListView/AllJobsListView";
 import PerformanceView from "../Modules/PerformanceView/PerformanceView";
 import ActivityHistoryView from "../Modules/ActivityHistoryView/ActivityHistoryView";
 import TaskDetailView from "../Modules/TaskDetailView/TaskDetailView";
-
 interface MobileLayoutProps {
   SpContext: any;
   graphContext: any;
@@ -43,12 +46,13 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
   graphContext,
 }: MobileLayoutProps) => {
   console.log(SpContext, graphContext);
-
   const spWeb = Web("https://chandrudemo.sharepoint.com/sites/FieldService");
 
   const [allJobs, setAllJobs] = useState<Job[]>([]);
   const [recentActivities, setRecentActivities] = useState<IActivities[]>([]);
   const [employeeDetails, setEmployeeDetails] = useState<any>([]);
+
+  console.log("employeeDetails", employeeDetails);
 
   const usePageMeta = () => {
     const location = useLocation();
@@ -90,14 +94,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
       const user = await spWeb.currentUser.get();
       getEmployeeDetails(setEmployeeDetails, spWeb, user.Email);
       getjobsDetails(spWeb, setAllJobs);
-      setRecentActivities([]);
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      const user = await spWeb.currentUser.get();
-      console.log(user);
+      getAllActivities(spWeb, setRecentActivities);
     })();
   }, []);
 
@@ -111,13 +108,12 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
         <div className={styles.navInner}>
           {isSubView ? (
             <div className={styles.headerLeft}>
-              <motion.button
-                whileTap={{ scale: 0.9 }}
+              <button
                 onClick={() => navigate(-1)}
                 className={styles.backButton}
               >
                 <ArrowLeft size={24} />
-              </motion.button>
+              </button>
               <h1 className={styles.appTitle}>{title}</h1>
             </div>
           ) : (
@@ -149,13 +145,10 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
             </div>
           )}
 
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            className={styles.notificationButton}
-          >
+          <button className={styles.notificationButton}>
             <Bell size={18} />
             <span className={styles.notificationDot}></span>
-          </motion.button>
+          </button>
         </div>
       </nav>
 
@@ -215,7 +208,7 @@ const MobileLayout: React.FC<MobileLayoutProps> = ({
 
           <Route
             path="/profile"
-            element={<ProfileView employeeDetails={employeeDetails[0]} />}
+            element={<ProfileView employeeInformations={employeeDetails} />}
           />
         </Routes>
       </main>
