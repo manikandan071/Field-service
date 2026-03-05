@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from "react";
 import { useState } from "react";
 import {
@@ -117,7 +121,7 @@ const AllJobsListView: React.FC<AllJobsListViewProps> = ({
 
               <div className={styles.jobInfo}>
                 <div className={styles.jobTop}>
-                  <span className={styles.jobId}>{job.id}</span>
+                  <span className={styles.jobId}>J000{job.id}</span>
                   <span className={`${styles.priorityBadge} ${priorityClass}`}>
                     {job.priority}
                   </span>

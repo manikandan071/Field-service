@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from "react";
 import { useState, useMemo, useEffect } from "react";
 import {
@@ -60,7 +64,7 @@ const JobsView: React.FC<JobsViewProps> = ({
   }, []);
 
   return (
-    <div>
+    <div className={styles.todayjob_container}>
       <div className={styles.jobsHeader}>
         <div>
           <h2>Daily Assignments</h2>

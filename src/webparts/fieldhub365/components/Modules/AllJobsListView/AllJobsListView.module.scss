@@ -159,7 +159,7 @@
 
 .jobTop {
   display: flex;
-  justify-content: space-between;
+  gap: 8px;
   align-items: center;
 }
 
@@ -167,8 +167,7 @@
   font-size: 9px;
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #a5b4fc;
+  color: #6366f1;
 }
 
 .priorityBadge {
@@ -209,9 +208,13 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 10px;
-  font-weight: 600;
-  color: #cbd5e1;
+  font-size: 11px;
+  opacity: 0.6;
+}
+.jobMeta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .chevron {

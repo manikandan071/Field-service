@@ -4,38 +4,37 @@ export const getEmployeeDetails = async (
   userEmail: string,
 ) => {
   try {
-    const EmployeeWithDetails = await spWeb.list
+    const user = await spWeb.currentUser.get();
+    const items = await spWeb.lists
       .getByTitle("EmployeeDetails")
-      .items.get()
-      .select("Employee")
-      .then((items: any[]) => {
-        const tempEmployeeDetails = items.map(
-          async (employee: any, index: number) => {
-            return {
-              id: employee.id,
-              employee: employee.Employee,
-              skillSets: employee.SkillSets,
-              role: employee.Role,
-              level: employee.Level,
-              address1: employee.Address1,
-              address2: employee.Address2,
-              address:
-                employee.Address1 +
-                ", " +
-                employee.Address2 +
-                ", " +
-                employee.City,
-              city: employee.City,
-              contactNo: employee.ContactNo,
-              contactEmail: employee.ContactEmail,
-            };
-          },
-        );
-        return tempEmployeeDetails || null;
-      });
-    setEmployeeDetails(
-      EmployeeWithDetails.filter((emp: any) => emp.contactEmail === userEmail),
+      .select("*,Employee/Id,Employee/Title,Employee/EMail")
+      .expand("Employee")
+      .items.get();
+
+    const tempEmployeeDetails = items.map((employee: any) => ({
+      id: employee.Id,
+      employee: employee.Employee,
+      employeeId: employee.EmployeeId,
+      skillSets: employee.SkillSets,
+      role: employee.Role,
+      level: employee.Level,
+      address1: employee.Address1,
+      address2: employee.Address2,
+      address: `${employee.Address1}, ${employee.Address2}, ${employee.City}`,
+      city: employee.City,
+      contactNo: employee.ContactNo,
+      contactEmail: employee.ContactEmail,
+    }));
+
+    const EmployeeWithDetails = tempEmployeeDetails.find(
+      (emp: any) => emp.employeeId === user.Id,
     );
+
+    setEmployeeDetails({
+      ...EmployeeWithDetails,
+      employee: user.Title,
+      contactEmail: user.Email,
+    });
   } catch (error) {
     console.error("Error fetching employee details:", error);
   }
@@ -43,7 +42,7 @@ export const getEmployeeDetails = async (
 
 // Fetch recent acctivities function
 
-export const getActiveClockRecord = (userEmail: string, spWeb: any) => {
+export const getActiveClockRecord = (userId: number, spWeb: any) => {
   try {
     const getActiveClockItem = spWeb.lists
       .getByTitle("ClockInOut")
@@ -52,11 +51,12 @@ export const getActiveClockRecord = (userEmail: string, spWeb: any) => {
       .items.get()
       .then((res: any) => {
         const filtered = res.filter((item: any) => {
-          const owner = item.createdBy;
-          const clockOut = item.fields.ClockOut;
-          return owner === userEmail && clockOut === false;
+          const owner = item.AuthorId;
+          const clockOut = item.ClockOut;
+          return owner === userId && clockOut === false;
         });
         console.log("Filtered", filtered);
+        return filtered;
       });
     return getActiveClockItem;
   } catch (error) {
@@ -90,37 +90,92 @@ export const clockOut = async (spWeb: any, recId: number) => {
 
 export const getjobsDetails = async (spWeb: any, setAllJobs: any) => {
   try {
+    const customerDetails = await spWeb.lists
+      .getByTitle("CustomerDetails")
+      .items.get()
+      .then((res: any) => {
+        const tempCustomerDetails = res.map((customer: any) => {
+          return {
+            id: customer.Id,
+            address1: customer.Address1,
+            address2: customer.Address2,
+            city: customer.City,
+            contactNo: customer.ContactNo,
+            contactEmail: customer.ContactEmail,
+            firstName: customer.FirstName,
+            lastName: customer.LastName,
+          };
+        });
+        return tempCustomerDetails;
+      });
     await spWeb.lists
       .getByTitle("Jobs")
-      .items.select(
-        "*,Author/Id,Author/Title,Author/EMail,Customer/Id,Customer/Address1,Customer/Address2,Customer/City,Customer/FirstName,Customer/LastName,Customer/ContactNo,Customer/ContactEmail",
-      )
+      .select("*,Author/Id,Author/Title,Author/EMail,Customer/Id")
       .expand("Author,Customer")
-      .get()
+      .items.get()
       .then((res: any) => {
+        debugger;
         const tempJobDetails = res.map((job: any) => {
+          const customer = customerDetails.find(
+            (customer: any) => customer?.id === job.CustomerId,
+          );
           return {
-            id: Number(job.id),
-            title: job.fields.Title,
-            status: job.fields.Status,
-            priority: job.fields.Priority,
-            startDate: job.fields.StartDate,
-            endDate: job.fields.EndDate,
-            customerRating: job.fields.Rating,
-            customerFeedback: job.fields.FeedBacks,
-            customerId: job.Customer,
-            firstName: job.Customer,
-            lastName: job.Customer,
-            customer: job.Customer + " " + job.Customer,
-            address1: job.Customer,
-            address2: job.Customer,
-            address: job.Customer + ", " + job.Customer + ", " + job.Customer,
-            city: job.Customer,
-            contactNo: job.Customer,
-            contactEmail: job.Customer,
+            id: job.Id,
+            title: job.Title,
+            status: job.Status,
+            priority: job.Priority,
+            startDate: job.StartDate,
+            endDate: job.EndDate,
+            customerRating: job.Rating,
+            customerFeedback: job.FeedBacks,
+            customerId: customer.id,
+            firstName: customer.firstName,
+            lastName: customer.lastName,
+            customer: customer.firstName + " " + customer.lastName,
+            address1: customer.address1,
+            address2: customer.address2,
+            address:
+              customer.address1 +
+              ", " +
+              customer.address2 +
+              ", " +
+              customer.city,
+            city: customer.city,
+            contactNo: customer.contactNo,
+            contactEmail: customer.contactEmail,
           };
         });
         setAllJobs(tempJobDetails);
+      });
+  } catch (error) {
+    console.log("Error :", error);
+  }
+};
+
+// Fetch recent acctivies functions
+
+export const getAllActivities = async (
+  spWeb: any,
+  setRecentActivities: any,
+) => {
+  try {
+    await spWeb.lists
+      .getByTitle("Activities")
+      .select("*,Job/Id")
+      .expand("Job")
+      .items.get()
+      .then((res: any) => {
+        debugger;
+        const tempJobDetails = res.map((activity: any) => {
+          return {
+            id: activity.id,
+            title: activity.Title,
+            description: activity.Description,
+            job: activity.JobId,
+            created: activity.Created,
+          };
+        });
+        setRecentActivities(tempJobDetails);
       });
   } catch (error) {
     console.log("Error :", error);
